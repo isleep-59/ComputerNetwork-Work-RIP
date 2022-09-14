@@ -1,14 +1,14 @@
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 public class Router implements Serializable {
     private String routerName;
-    private Map<String, Information> information;
-    private Map<String, Integer> adjRouterMissCount;
+    private Map<String, Information> information;   //目的网络为主键
+    private Map<Router, Integer> adjRouterMissCount;    //路由器为主键
     private Boolean routerStatus;
 
     public Router() {
+
     }
 
     public Router(String routerName, Map<String, Information> information, Boolean routerStatus) {
@@ -17,17 +17,18 @@ public class Router implements Serializable {
         this.routerStatus = routerStatus;
     }
 
+
     @Override
     public String toString() {
         return "RouterName: " + routerName + "\n" +
                 "Information: " + information.values() + "\n";
     }
 
-    public void setAdjRouterMissCount(String routerName, Integer i) {
-        this.adjRouterMissCount.put(routerName, i);
+    public void setAdjRouterMissCount(Router router, Integer i) {
+        this.adjRouterMissCount.put(router, i);
     }
 
-    public Map<String, Integer> getAdjRouterMissCount() {
+    public Map<Router, Integer> getAdjRouterMissCount() {
         return adjRouterMissCount;
     }
 
