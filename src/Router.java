@@ -5,7 +5,7 @@ import java.util.Map;
 public class Router implements Serializable {
     private String routerName;
     private Map<String, Information> information;
-    private List<Router> adjRouterList;
+    private Map<String, Integer> adjRouterMissCount;
     private Boolean routerStatus;
 
     public Router() {
@@ -23,6 +23,14 @@ public class Router implements Serializable {
                 "Information: " + information.values() + "\n";
     }
 
+    public void setAdjRouterMissCount(String routerName, Integer i) {
+        this.adjRouterMissCount.put(routerName, i);
+    }
+
+    public Map<String, Integer> getAdjRouterMissCount() {
+        return adjRouterMissCount;
+    }
+
     public String getRouterName() {
         return routerName;
     }
@@ -37,14 +45,6 @@ public class Router implements Serializable {
 
     public void setinformation(Map<String, Information> information) {
         this.information = information;
-    }
-
-    public List<Router> getAdjRouterList() {
-        return adjRouterList;
-    }
-
-    public void setAdjRouterList(List<Router> adjRouterList) {
-        this.adjRouterList = adjRouterList;
     }
 
     public Boolean getRouterStatus() {
