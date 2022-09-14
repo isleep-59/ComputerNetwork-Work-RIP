@@ -6,6 +6,7 @@ public class Information implements Serializable {
     private String nextRouter;
 
     public Information() {
+
     }
 
     public Information(String targetNetwork, int distance, String nextRouter) {
