@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Network {
+public class Network implements Serializable {
     private List<Router> routerList;
 
     public List<Router> getRouterList() {
