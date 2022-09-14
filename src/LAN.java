@@ -23,64 +23,70 @@ public class LAN {
 
     public void initRouter() {
         this.routerMap = new HashMap<String, Router>();
+        Router routerA = new Router();
+        Router routerB = new Router();
+        Router routerC = new Router();
+        Router routerD = new Router();
+        Router routerE = new Router();
+        Router routerF = new Router();
 
         //Initial Router A
         Map<String, Information> informationA = new HashMap<String, Information>();
         informationA.put("Network1", new Information("Network1", 0, "null"));
         informationA.put("Network2", new Information("Network2", 0, "null"));
         informationA.put("Network3", new Information("Network3", 0, "null"));
-        Router routerA = new Router("RouterA", informationA, true);
-        routerA.setAdjRouterMissCount("RouterB", 0);
-        routerA.setAdjRouterMissCount("RouterD", 0);
-        routerA.setAdjRouterMissCount("RouterE", 0);
+        routerA.setRouterName("RouterA"); routerA.setinformation(informationA); routerA.setRouterStatus(true);
+        routerA.setAdjRouterMissCount(routerB, 0);
+        routerA.setAdjRouterMissCount(routerD, 0);
+        routerA.setAdjRouterMissCount(routerE, 0);
         this.routerMap.put("RouterA", routerA);
 
         //Initial Router B
         Map<String, Information> informationB = new HashMap<String, Information>();
         informationB.put("Network3", new Information("Network3", 0, "null"));
         informationB.put("Network4", new Information("Network4", 0, "null"));
-        Router routerB = new Router("RouterB", informationB, true);
-        routerB.setAdjRouterMissCount("RouterA", 0);
-        routerB.setAdjRouterMissCount("RouterC", 0);
+        routerB.setRouterName("RouterB"); routerB.setinformation(informationB); routerB.setRouterStatus(true);
+        routerB.setAdjRouterMissCount(routerA, 0);
+        routerB.setAdjRouterMissCount(routerC, 0);
         this.routerMap.put("RouterB", routerB);
 
         //Initial Router C
         Map<String, Information> informationC = new HashMap<String, Information>();
         informationC.put("Network4", new Information("Network4", 0, "null"));
         informationC.put("Network5", new Information("Network5", 0, "null"));
-        Router routerC = new Router("RouterC", informationC, true);
-        routerC.setAdjRouterMissCount("RouterB", 0);
-        routerC.setAdjRouterMissCount("RouterF", 0);
+        routerC.setRouterName("RouterC"); routerC.setinformation(informationC); routerC.setRouterStatus(true);
+        routerC.setAdjRouterMissCount(routerB, 0);
+        routerC.setAdjRouterMissCount(routerF, 0);
         this.routerMap.put("RouterC", routerC);
 
         //Initial Router D
         Map<String, Information> informationD = new HashMap<String, Information>();
         informationD.put("Network2", new Information("Network2", 0, "null"));
         informationD.put("Network5", new Information("Network5", 0, "null"));
-        Router routerD = new Router("RouterD", informationD, true);
-        routerD.setAdjRouterMissCount("RouterA", 0);
-        routerD.setAdjRouterMissCount("RouterE", 0);
-        routerD.setAdjRouterMissCount("RouterF", 0);
+        routerD.setRouterName("RouterD"); routerD.setinformation(informationD); routerD.setRouterStatus(true);
+        routerD.setAdjRouterMissCount(routerA, 0);
+        routerD.setAdjRouterMissCount(routerE, 0);
+        routerD.setAdjRouterMissCount(routerF, 0);
         this.routerMap.put("RouterD", routerD);
 
         //Initial Router E
         Map<String, Information> informationE = new HashMap<String, Information>();
         informationE.put("Network1", new Information("Network1", 0, "null"));
         informationE.put("Network6", new Information("Network6", 0, "null"));
-        Router routerE = new Router("RouterE", informationE, true);
-        routerE.setAdjRouterMissCount("RouterA", 0);
-        routerE.setAdjRouterMissCount("RouterD", 0);
-        routerE.setAdjRouterMissCount("RouterF", 0);
+        routerE.setRouterName("RouterE"); routerE.setinformation(informationE); routerE.setRouterStatus(true);
+        routerE.setAdjRouterMissCount(routerA, 0);
+        routerE.setAdjRouterMissCount(routerD, 0);
+        routerE.setAdjRouterMissCount(routerF, 0);
         this.routerMap.put("RouterE", routerE);
 
         //Initial Router F
         Map<String, Information> informationF = new HashMap<String, Information>();
         informationF.put("Network5", new Information("Network5", 0, "null"));
         informationF.put("Network6", new Information("Network6", 0, "null"));
-        Router routerF = new Router("RouterF", informationB, true);
-        routerF.setAdjRouterMissCount("RouterC", 0);
-        routerF.setAdjRouterMissCount("RouterD", 0);
-        routerF.setAdjRouterMissCount("RouterE", 0);
+        routerF.setRouterName("RouterF"); routerF.setinformation(informationF); routerF.setRouterStatus(true);
+        routerF.setAdjRouterMissCount(routerC, 0);
+        routerF.setAdjRouterMissCount(routerD, 0);
+        routerF.setAdjRouterMissCount(routerE, 0);
         this.routerMap.put("RouterF", routerF);
     }
 
@@ -88,40 +94,40 @@ public class LAN {
         this.networkMap = new HashMap<String, Network>();
 
         //Initial Network1
-        List<String> adj1 = new ArrayList<String>();
-        adj1.add("RouterA");
-        adj1.add("RouterE");
+        List<Router> adj1 = new ArrayList<Router>();
+        adj1.add(routerMap.get("RouterA"));
+        adj1.add(routerMap.get("RouterE"));
         networkMap.put("Network1", new Network(adj1));
 
         //Initial Network2
-        List<String> adj2 = new ArrayList<String>();
-        adj2.add("RouterA");
-        adj2.add("RouterD");
+        List<Router> adj2 = new ArrayList<Router>();
+        adj2.add(routerMap.get("RouterA"));
+        adj2.add(routerMap.get("RouterD"));
         networkMap.put("Network2", new Network(adj2));
 
         //Initial Network3
-        List<String> adj3 = new ArrayList<String>();
-        adj3.add("RouterA");
-        adj3.add("RouterB");
+        List<Router> adj3 = new ArrayList<Router>();
+        adj3.add(routerMap.get("RouterA"));
+        adj3.add(routerMap.get("RouterB"));
         networkMap.put("Network3", new Network(adj3));
 
         //Initial Network4
-        List<String> adj4 = new ArrayList<String>();
-        adj4.add("RouterB");
-        adj4.add("RouterC");
+        List<Router> adj4 = new ArrayList<Router>();
+        adj4.add(routerMap.get("RouterB"));
+        adj4.add(routerMap.get("RouterC"));
         networkMap.put("Network4", new Network(adj4));
 
         //Initial Network5
-        List<String> adj5 = new ArrayList<String>();
-        adj5.add("RouterC");
-        adj5.add("RouterF");
+        List<Router> adj5 = new ArrayList<Router>();
+        adj5.add(routerMap.get("RouterC"));
+        adj5.add(routerMap.get("RouterF"));
         networkMap.put("Network5", new Network(adj5));
 
         //Initial Network6
-        List<String> adj6 = new ArrayList<String>();
-        adj6.add("RouterD");
-        adj6.add("RouterE");
-        adj6.add("RouterF");
+        List<Router> adj6 = new ArrayList<Router>();
+        adj6.add(routerMap.get("RouterD"));
+        adj6.add(routerMap.get("RouterE"));
+        adj6.add(routerMap.get("RouterF"));
         networkMap.put("Network6", new Network(adj6));
     }
 }
