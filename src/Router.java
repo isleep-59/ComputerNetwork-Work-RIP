@@ -6,7 +6,7 @@ public class Router implements Serializable {
     private String routerName;
     private Map<String, Information> information;
     private List<Router> adjRouterList;
-    Boolean routerStatus;
+    private Boolean routerStatus;
 
     public Router() {
     }
