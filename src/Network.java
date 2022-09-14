@@ -2,21 +2,21 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Network implements Serializable {
-    List<String> adjRouterList;
+    List<Router> adjRouterList;
 
     public Network() {
 
     }
 
-    public Network(List<String> adjRouterList) {
+    public Network(List<Router> adjRouterList) {
         this.adjRouterList = adjRouterList;
     }
 
-    public List<String> getAdjRouterList() {
+    public List<Router> getAdjRouterList() {
         return adjRouterList;
     }
 
-    public void setAdjRouterList(List<String> adjRouterList) {
+    public void setAdjRouterList(List<Router> adjRouterList) {
         this.adjRouterList = adjRouterList;
     }
 }
