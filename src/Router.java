@@ -18,6 +18,7 @@ public class Router implements Serializable {
     }
 
 
+
     @Override
     public String toString() {
         return "RouterName: " + routerName + "\n" +
@@ -40,11 +41,11 @@ public class Router implements Serializable {
         this.routerName = routerName;
     }
 
-    public Map<String, Information> getinformation() {
+    public Map<String, Information> getInformation() {
         return information;
     }
 
-    public void setinformation(Map<String, Information> information) {
+    public void setInformation(Map<String, Information> information) {
         this.information = information;
     }
 

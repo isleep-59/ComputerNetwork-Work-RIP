@@ -41,7 +41,7 @@ public class LAN {
         informationA.put("Network1", new Information("Network1", 0, "null"));
         informationA.put("Network2", new Information("Network2", 0, "null"));
         informationA.put("Network3", new Information("Network3", 0, "null"));
-        routerA.setRouterName("RouterA"); routerA.setinformation(informationA); routerA.setRouterStatus(true);
+        routerA.setRouterName("RouterA"); routerA.setInformation(informationA); routerA.setRouterStatus(true);
         routerA.setAdjRouterMissCount(routerB, 0);
         routerA.setAdjRouterMissCount(routerD, 0);
         routerA.setAdjRouterMissCount(routerE, 0);
@@ -51,7 +51,7 @@ public class LAN {
         Map<String, Information> informationB = new HashMap<String, Information>();
         informationB.put("Network3", new Information("Network3", 0, "null"));
         informationB.put("Network4", new Information("Network4", 0, "null"));
-        routerB.setRouterName("RouterB"); routerB.setinformation(informationB); routerB.setRouterStatus(true);
+        routerB.setRouterName("RouterB"); routerB.setInformation(informationB); routerB.setRouterStatus(true);
         routerB.setAdjRouterMissCount(routerA, 0);
         routerB.setAdjRouterMissCount(routerC, 0);
         this.routerMap.put("RouterB", routerB);
@@ -60,7 +60,7 @@ public class LAN {
         Map<String, Information> informationC = new HashMap<String, Information>();
         informationC.put("Network4", new Information("Network4", 0, "null"));
         informationC.put("Network5", new Information("Network5", 0, "null"));
-        routerC.setRouterName("RouterC"); routerC.setinformation(informationC); routerC.setRouterStatus(true);
+        routerC.setRouterName("RouterC"); routerC.setInformation(informationC); routerC.setRouterStatus(true);
         routerC.setAdjRouterMissCount(routerB, 0);
         routerC.setAdjRouterMissCount(routerF, 0);
         this.routerMap.put("RouterC", routerC);
@@ -69,7 +69,7 @@ public class LAN {
         Map<String, Information> informationD = new HashMap<String, Information>();
         informationD.put("Network2", new Information("Network2", 0, "null"));
         informationD.put("Network5", new Information("Network5", 0, "null"));
-        routerD.setRouterName("RouterD"); routerD.setinformation(informationD); routerD.setRouterStatus(true);
+        routerD.setRouterName("RouterD"); routerD.setInformation(informationD); routerD.setRouterStatus(true);
         routerD.setAdjRouterMissCount(routerA, 0);
         routerD.setAdjRouterMissCount(routerE, 0);
         routerD.setAdjRouterMissCount(routerF, 0);
@@ -79,7 +79,7 @@ public class LAN {
         Map<String, Information> informationE = new HashMap<String, Information>();
         informationE.put("Network1", new Information("Network1", 0, "null"));
         informationE.put("Network6", new Information("Network6", 0, "null"));
-        routerE.setRouterName("RouterE"); routerE.setinformation(informationE); routerE.setRouterStatus(true);
+        routerE.setRouterName("RouterE"); routerE.setInformation(informationE); routerE.setRouterStatus(true);
         routerE.setAdjRouterMissCount(routerA, 0);
         routerE.setAdjRouterMissCount(routerD, 0);
         routerE.setAdjRouterMissCount(routerF, 0);
@@ -89,7 +89,7 @@ public class LAN {
         Map<String, Information> informationF = new HashMap<String, Information>();
         informationF.put("Network5", new Information("Network5", 0, "null"));
         informationF.put("Network6", new Information("Network6", 0, "null"));
-        routerF.setRouterName("RouterF"); routerF.setinformation(informationF); routerF.setRouterStatus(true);
+        routerF.setRouterName("RouterF"); routerF.setInformation(informationF); routerF.setRouterStatus(true);
         routerF.setAdjRouterMissCount(routerC, 0);
         routerF.setAdjRouterMissCount(routerD, 0);
         routerF.setAdjRouterMissCount(routerE, 0);
@@ -146,11 +146,11 @@ public class LAN {
     //网络删除
     public void deleteNetwork(Network network) {
         for(Router router : network.getAdjRouterList()) {
-            for(String targetNetworkName : router.getinformation().keySet()) {
+            for(String targetNetworkName : router.getInformation().keySet()) {
                 if(targetNetworkName == network.networkName) {
-                    Information information = router.getinformation().get(targetNetworkName);
+                    Information information = router.getInformation().get(targetNetworkName);
                     information.setDistance(16);
-                    router.getinformation().put(targetNetworkName, information);
+                    router.getInformation().put(targetNetworkName, information);
                 }
             }
         }
@@ -163,8 +163,8 @@ public class LAN {
 
     //输出指定路由器的路由表
     public void displayRouterInformation(Router router) {
-        for(String targetNetworkName : router.getinformation().keySet()) {
-            System.out.println(router.getinformation().get(targetNetworkName));
+        for(String targetNetworkName : router.getInformation().keySet()) {
+            System.out.println(router.getInformation().get(targetNetworkName));
         }
     }
 }
