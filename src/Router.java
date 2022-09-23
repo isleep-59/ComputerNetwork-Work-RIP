@@ -3,7 +3,7 @@ import java.util.Map;
 
 public class Router implements Serializable {
     private String routerName;
-    private Map<String, Information> information;   //目的网络为主键
+    private Map<String, Information> informationTable;   //目的网络为主键
     private Map<Router, Integer> adjRouterMissCount;    //路由器为主键
     private Boolean routerStatus;
 
@@ -11,18 +11,26 @@ public class Router implements Serializable {
 
     }
 
-    public Router(String routerName, Map<String, Information> information, Boolean routerStatus) {
+    public Router(String routerName, Map<String, Information> informationTable, Boolean routerStatus) {
         this.routerName = routerName;
-        this.information = information;
+        this.informationTable = informationTable;
         this.routerStatus = routerStatus;
     }
 
+    public void receiveInformation() {
+        
+    }
 
+    public void update() {
+        for (Router router : adjRouterMissCount.keySet()) {
+
+        }
+    }
 
     @Override
     public String toString() {
         return "RouterName: " + routerName + "\n" +
-                "Information: " + information.values() + "\n";
+                "Information: " + informationTable.values() + "\n";
     }
 
     public void setAdjRouterMissCount(Router router, Integer i) {
@@ -42,11 +50,11 @@ public class Router implements Serializable {
     }
 
     public Map<String, Information> getInformation() {
-        return information;
+        return informationTable;
     }
 
-    public void setInformation(Map<String, Information> information) {
-        this.information = information;
+    public void setInformation(Map<String, Information> informationTable) {
+        this.informationTable = informationTable;
     }
 
     public Boolean getRouterStatus() {
