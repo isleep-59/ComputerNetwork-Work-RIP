@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 public class Router extends Thread implements Serializable {
+    private Integer updateTime;
     private String routerName;
     private Map<String, Information> informationTable;   //目的网络为主键
     private Map<Router, Integer> adjRouterMissCount;    //路由器为主键
@@ -15,6 +16,52 @@ public class Router extends Thread implements Serializable {
     public Router(String routerName, Map<String, Information> informationTable, Boolean routerStatus) {
         this.routerName = routerName;
         this.informationTable = informationTable;
+        this.routerStatus = routerStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "RouterName: " + routerName + "\n" +
+                "Information: " + informationTable.values() + "\n";
+    }
+
+    //设置定期更新时间
+    public void setUpdateTime(Integer updateTime) {
+        this.updateTime = updateTime;
+    }
+    public void setAdjRouterMissCount(Router router, Integer i) {
+        this.adjRouterMissCount.put(router, i);
+    }
+
+    public Integer getAdjRouterMissCount(Router router) {
+        return this.adjRouterMissCount.get(router);
+    }
+
+    public Map<Router, Integer> getAdjRouterMissCount() {
+        return adjRouterMissCount;
+    }
+
+    public String getRouterName() {
+        return routerName;
+    }
+
+    public void setRouterName(String routerName) {
+        this.routerName = routerName;
+    }
+
+    public Map<String, Information> getInformationTable() {
+        return informationTable;
+    }
+
+    public void setInformationTable(Map<String, Information> informationTable) {
+        this.informationTable = informationTable;
+    }
+
+    public Boolean getRouterStatus() {
+        return routerStatus;
+    }
+
+    public void setRouterStatus(Boolean routerStatus) {
         this.routerStatus = routerStatus;
     }
 
@@ -66,49 +113,5 @@ public class Router extends Thread implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "RouterName: " + routerName + "\n" +
-                "Information: " + informationTable.values() + "\n";
-    }
 
-    public void setAdjRouterMissCount(Router router, Integer i) {
-        this.adjRouterMissCount.put(router, i);
-    }
-
-    public Integer getAdjRouterMissCount(Router router) {
-        return this.adjRouterMissCount.get(router);
-    }
-
-    public Map<Router, Integer> getAdjRouterMissCount() {
-        return adjRouterMissCount;
-    }
-
-    public String getRouterName() {
-        return routerName;
-    }
-
-    public void setRouterName(String routerName) {
-        this.routerName = routerName;
-    }
-
-    public Map<String, Information> getInformationTable() {
-        return informationTable;
-    }
-
-    public void setInformationTable(Map<String, Information> informationTable) {
-        this.informationTable = informationTable;
-    }
-
-    public Boolean getRouterStatus() {
-        return routerStatus;
-    }
-
-    public void setRouterStatus(Boolean routerStatus) {
-        this.routerStatus = routerStatus;
-    }
-    @Override
-    public void run() {
-
-    }
 }

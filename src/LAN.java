@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 public class LAN {
-    private Integer updateTime;
     private Map<String, Router> routerMap;
     private Map<String, Network> networkMap;
 
@@ -19,11 +18,6 @@ public class LAN {
 
     public void setRouterMap(Map<String, Router> routerMap) {
         this.routerMap = routerMap;
-    }
-
-    //设置定期更新时间
-    public void setUpdateTime(Integer updateTime) {
-        this.updateTime = updateTime;
     }
 
     //初始化路由器
