@@ -1,3 +1,4 @@
+import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -17,13 +18,51 @@ public class Router implements Serializable {
         this.routerStatus = routerStatus;
     }
 
-    public void receiveInformation() {
-        
+    public void receiveInformationTable(Router router) {
+        adjRouterMissCount.put(router, 0);
+
+        Map<String, Information> comeInformationTable = router.getInformationTable();
+        for(String comeNetworkName : comeInformationTable.keySet()) {
+            Information comeInformation = comeInformationTable.get(comeNetworkName);
+            boolean flag = false;
+            for(String networkName : this.informationTable.keySet()) {
+                Information information = this.informationTable.get(networkName);
+                if(comeNetworkName == networkName) {
+                    flag = true;
+                    if(comeInformation.getNextRouterName() == information.getNextRouterName()) {
+                        information.setDistance(comeInformation.getDistance());
+                    }
+                    else {
+                        if(comeInformation.getDistance() < information.getDistance()) {
+                            information.setNextRouterName(comeInformation.getNextRouterName());
+                            information.setDistance(comeInformation.getDistance());
+                        }
+                    }
+                }
+            }
+            if(flag == false) {
+                this.informationTable.put(comeInformation.getTargetNetwork(), comeInformation);
+            }
+        }
     }
 
-    public void update() {
-        for (Router router : adjRouterMissCount.keySet()) {
 
+    public void update() {
+        for (Router adjRouter : adjRouterMissCount.keySet()) {
+            adjRouter.receiveInformationTable(this);
+            adjRouterMissCount.put(adjRouter, getAdjRouterMissCount(adjRouter) + 1);
+        }
+
+        for (Router adjRouter : adjRouterMissCount.keySet()) {
+            if(adjRouterMissCount.get(adjRouter) == 6) {
+                for(String networkName : informationTable.keySet()) {
+                    Information information = informationTable.get(networkName);
+                    if(information.getNextRouterName() == adjRouter.routerName) {
+                        information.setDistance(16);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -35,6 +74,10 @@ public class Router implements Serializable {
 
     public void setAdjRouterMissCount(Router router, Integer i) {
         this.adjRouterMissCount.put(router, i);
+    }
+
+    public Integer getAdjRouterMissCount(Router router) {
+        return this.adjRouterMissCount.get(router);
     }
 
     public Map<Router, Integer> getAdjRouterMissCount() {
@@ -49,11 +92,11 @@ public class Router implements Serializable {
         this.routerName = routerName;
     }
 
-    public Map<String, Information> getInformation() {
+    public Map<String, Information> getInformationTable() {
         return informationTable;
     }
 
-    public void setInformation(Map<String, Information> informationTable) {
+    public void setInformationTable(Map<String, Information> informationTable) {
         this.informationTable = informationTable;
     }
 
