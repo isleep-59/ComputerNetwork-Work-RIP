@@ -2,7 +2,7 @@ import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import java.io.Serializable;
 import java.util.Map;
 
-public class Router implements Serializable {
+public class Router extends Thread implements Serializable {
     private String routerName;
     private Map<String, Information> informationTable;   //目的网络为主键
     private Map<Router, Integer> adjRouterMissCount;    //路由器为主键
@@ -106,5 +106,9 @@ public class Router implements Serializable {
 
     public void setRouterStatus(Boolean routerStatus) {
         this.routerStatus = routerStatus;
+    }
+    @Override
+    public void run() {
+
     }
 }
