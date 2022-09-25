@@ -36,11 +36,11 @@ public class Information implements Serializable {
         this.distance = distance;
     }
 
-    public String getNextRouter() {
+    public String getNextRouterName() {
         return nextRouter;
     }
 
-    public void setNextRouter(String nextRouter) {
+    public void setNextRouterName(String nextRouter) {
         this.nextRouter = nextRouter;
     }
 }
