@@ -11,7 +11,7 @@ public class Router extends Thread implements Serializable {
     private Boolean routerStatus;
 
     public Router() {
-
+        updateTime = 30;
     }
 
     public Router(String routerName, Map<String, Information> informationTable, Boolean routerStatus) {
@@ -30,16 +30,12 @@ public class Router extends Thread implements Serializable {
     public void setUpdateTime(Integer updateTime) {
         this.updateTime = updateTime;
     }
-    public void setAdjRouterMissCount(Router router, Integer i) {
-        this.adjRouterMissCount.put(router, i);
+    public void setAdjRouterMissCount(Map<Router, Integer> adjRouterMissCount) {
+        this.adjRouterMissCount = adjRouterMissCount;
     }
 
     public Integer getAdjRouterMissCount(Router router) {
         return this.adjRouterMissCount.get(router);
-    }
-
-    public Map<Router, Integer> getAdjRouterMissCount() {
-        return adjRouterMissCount;
     }
 
     public String getRouterName() {
