@@ -1,3 +1,4 @@
+import javax.imageio.plugins.tiff.TIFFImageReadParam;
 import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import java.io.Serializable;
 import java.util.Map;
@@ -113,5 +114,15 @@ public class Router extends Thread implements Serializable {
         }
     }
 
-
+    @Override
+    public void run() {
+        if(routerStatus == true) {
+            update();
+            try {
+                Thread.sleep(updateTime.longValue() * 100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
