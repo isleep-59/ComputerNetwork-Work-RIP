@@ -63,8 +63,11 @@ public class Router extends Thread implements Serializable {
     }
 
     public void receiveInformationTable(Router router) {
-        adjRouterMissCount.put(router, 0);
+        if(routerStatus == false) {
+            return;
+        }
 
+        adjRouterMissCount.put(router, 0);
         Map<String, Information> comeInformationTable = router.getInformationTable();
         for(String comeNetworkName : comeInformationTable.keySet()) {
             Information comeInformation = comeInformationTable.get(comeNetworkName);
@@ -92,6 +95,10 @@ public class Router extends Thread implements Serializable {
 
 
     public void update() {
+        if(routerStatus == false) {
+            return;
+        }
+
         for (Router adjRouter : adjRouterMissCount.keySet()) {
             adjRouter.receiveInformationTable(this);
             adjRouterMissCount.put(adjRouter, getAdjRouterMissCount(adjRouter) + 1);
@@ -108,6 +115,14 @@ public class Router extends Thread implements Serializable {
                 }
             }
         }
+    }
+
+    public void shutdown() {
+        routerStatus = false;
+    }
+
+    public void launch() {
+        routerStatus = true;
     }
 
     @Override
