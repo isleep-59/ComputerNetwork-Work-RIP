@@ -185,4 +185,10 @@ public class LAN {
             System.out.println(router.getInformationTable().get(targetNetworkName));
         }
     }
+
+    public void setRouterUpdateTime(int t) {
+        for(String routerName : routerMap.keySet()) {
+            routerMap.get(routerName).setUpdateTime(t);
+        }
+    }
 }

@@ -6,8 +6,8 @@ import java.util.Map;
 public class Router extends Thread implements Serializable {
     private Integer updateTime;
     private String routerName;
-    private Map<String, Information> informationTable;   //ç›®çš„ç½‘ç»œä¸ºä¸»é”®
-    private Map<Router, Integer> adjRouterMissCount;    //è·¯ç”±å™¨ä¸ºä¸»é”®
+    private Map<String, Information> informationTable;   //Ä¿µÄÍøÂçÎªÖ÷¼ü
+    private Map<Router, Integer> adjRouterMissCount;    //Â·ÓÉÆ÷ÎªÖ÷¼ü
     private Boolean routerStatus;
 
     public Router() {
@@ -23,10 +23,10 @@ public class Router extends Thread implements Serializable {
     @Override
     public String toString() {
         return "RouterName: " + routerName + "\n" +
-                "Information: " + informationTable.values() + "\n";
+                "Information: \n" + informationTable.values() + "\n";
     }
 
-    //è®¾ç½®å®šæœŸæ›´æ–°æ—¶é—´
+    //ÉèÖÃ¶¨ÆÚ¸üÐÂÊ±¼ä
     public void setUpdateTime(Integer updateTime) {
         this.updateTime = updateTime;
     }
@@ -74,6 +74,11 @@ public class Router extends Thread implements Serializable {
             boolean flag = false;
             for(String networkName : this.informationTable.keySet()) {
                 Information information = this.informationTable.get(networkName);
+                if(information == comeInformation) {
+                    flag = true;
+                    continue;
+                }
+
                 if(comeNetworkName == networkName) {
                     flag = true;
                     if(comeInformation.getNextRouterName() == information.getNextRouterName()) {
@@ -117,23 +122,16 @@ public class Router extends Thread implements Serializable {
         }
     }
 
-    public void shutdown() {
-        routerStatus = false;
-    }
-
-    public void launch() {
-        routerStatus = true;
-    }
-
     @Override
     public void run() {
         if(routerStatus == true) {
-            update();
             try {
                 Thread.sleep(updateTime.longValue() * 100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            update();
+            System.out.println(this.routerName + "¸üÐÂ³É¹¦£¡" + "\n" + this);
         }
     }
 }
