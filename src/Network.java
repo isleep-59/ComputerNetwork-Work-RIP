@@ -12,6 +12,9 @@ public class Network implements Serializable {
     public Network(String networkName, List<Router> adjRouterList) {
         this.networkName = networkName;
         this.adjRouterList = adjRouterList;
+        for(Router router : adjRouterList) {
+            router.getInformationTable().get(networkName).setDistance(1);
+        }
     }
 
     public String getNetworkName() {

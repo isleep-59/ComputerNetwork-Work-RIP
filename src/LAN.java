@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 public class LAN {
+    private int workingRouterCount;
     private Map<String, Router> routerMap;
     private Map<String, Network> networkMap;
 
     public LAN() {
+        workingRouterCount = 6;
         initRouter();
         initNetwork();
     }
@@ -18,6 +20,14 @@ public class LAN {
 
     public void setRouterMap(Map<String, Router> routerMap) {
         this.routerMap = routerMap;
+    }
+
+    public Map<String, Network> getNetworkMap() {
+        return networkMap;
+    }
+
+    public int getWorkingRouterCount() {
+        return workingRouterCount;
     }
 
     //初始化路由器
@@ -186,21 +196,23 @@ public class LAN {
     }
     
     //网络删除
-    public void deleteNetwork(Network network) {
-        for(Router router : network.getAdjRouterList()) {
-            for(String targetNetworkName : router.getInformationTable().keySet()) {
-                if(targetNetworkName == network.networkName) {
-                    Information information = router.getInformationTable().get(targetNetworkName);
-                    information.setDistance(16);
-                    //router.getInformationTable().put(targetNetworkName, informationTable);
-                }
-            }
+    public void deleteNetwork(String networkName) {
+        for(String routerName : routerMap.keySet()) {
+            routerMap.get(routerName).getInformationTable().remove(networkName);
         }
+        this.getNetworkMap().remove(networkName);
     }
 
     //路由器故障
-    public void routerFault(Router router) {
-        router.setRouterStatus(false);
+    public void routerFault(String routerName) {
+        workingRouterCount -= 1;
+        routerMap.get(routerName).setRouterStatus(false);
+    }
+
+    //路由器修复
+    public void routerRecover(String routerName) {
+        workingRouterCount += 1;
+        routerMap.get(routerName).setRouterStatus(true);
     }
 
     //输出指定路由器的路由表
