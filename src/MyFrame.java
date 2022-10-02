@@ -33,8 +33,8 @@ class P1 extends JPanel {
         jb_init.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lan.initRouter();
-                lan.initNetwork();
+                //lan.initRouter();
+                //lan.initNetwork();
                 JOptionPane.showMessageDialog(null, "初始化成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("程序初始化成功！");
                 jb_start.setEnabled(true);

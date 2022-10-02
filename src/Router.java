@@ -1,6 +1,9 @@
 import javax.imageio.plugins.tiff.TIFFImageReadParam;
 import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Router extends Thread implements Serializable {
@@ -11,7 +14,7 @@ public class Router extends Thread implements Serializable {
     private Boolean routerStatus;
 
     public Router() {
-        updateTime = 30;
+
     }
 
     public Router(String routerName, Map<String, Information> informationTable, Boolean routerStatus) {
@@ -63,41 +66,45 @@ public class Router extends Thread implements Serializable {
     }
 
     public void receiveInformationTable(Router router) {
-        if(routerStatus == false) {
+        if (routerStatus == false) {
             return;
         }
 
         adjRouterMissCount.put(router, 0);
-        Map<String, Information> comeInformationTable = router.getInformationTable();
-        for(String comeNetworkName : comeInformationTable.keySet()) {
-            Information comeInformation = comeInformationTable.get(comeNetworkName);
-            boolean flag = false;
-            for(String networkName : this.informationTable.keySet()) {
-                Information information = this.informationTable.get(networkName);
-                if(information == comeInformation) {
-                    flag = true;
-                    continue;
-                }
 
-                if(comeNetworkName == networkName) {
-                    flag = true;
-                    if(comeInformation.getNextRouterName() == information.getNextRouterName()) {
+        //改造收到的路由表
+        Map<String, Information> comeInformationTable = new HashMap<>();
+        for (String networkName : router.getInformationTable().keySet()) {
+            int distance = router.getInformationTable().get(networkName).getDistance();
+            if(distance != 16) {
+                distance += 1;
+            }
+            comeInformationTable.put(networkName, new Information(networkName, distance, router.routerName));
+        }
+
+        for (String comeNetworkName : comeInformationTable.keySet()) {
+            Information comeInformation = comeInformationTable.get(comeNetworkName);
+            for (String networkName : this.informationTable.keySet()) {
+                Information information = this.informationTable.get(networkName);
+
+                //如果目的网络相同
+                if(comeInformation.getTargetNetwork().equals(information.getTargetNetwork())) {
+                    //如果下一跳相同
+                    if(comeInformation.getNextRouterName().equals(information.getNextRouterName())) {
                         information.setDistance(comeInformation.getDistance());
                     }
+                    //如果下一跳不相同
                     else {
+                        //判断是否更优
                         if(comeInformation.getDistance() < information.getDistance()) {
-                            information.setNextRouterName(comeInformation.getNextRouterName());
                             information.setDistance(comeInformation.getDistance());
+                            information.setNextRouterName(comeInformation.getNextRouterName());
                         }
                     }
                 }
             }
-            if(flag == false) {
-                this.informationTable.put(comeInformation.getTargetNetwork(), comeInformation);
-            }
         }
     }
-
 
     public void update() {
         if(routerStatus == false) {
@@ -120,18 +127,22 @@ public class Router extends Thread implements Serializable {
                 }
             }
         }
+
     }
 
     @Override
     public void run() {
-        if(routerStatus == true) {
+        while(routerStatus == true) {
+            synchronized (this) {
+                update();
+            }
+            System.out.println(this.routerName + "更新成功！" + "\n" + this);
+
             try {
                 Thread.sleep(updateTime.longValue() * 100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            update();
-            System.out.println(this.routerName + "更新成功！" + "\n" + this);
         }
     }
 }

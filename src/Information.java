@@ -15,6 +15,10 @@ public class Information implements Serializable {
         this.nextRouter = nextRouter;
     }
 
+    public boolean check(Information information) {
+        return targetNetwork.equals(information.targetNetwork) && distance == information.distance && nextRouter.equals(information.nextRouter);
+    }
+
     @Override
     public String toString() {
         return targetNetwork + "\t" + distance + "\t" + nextRouter + "\n";

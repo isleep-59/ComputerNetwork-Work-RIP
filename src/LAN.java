@@ -29,13 +29,22 @@ public class LAN {
         Router routerD = new Router();
         Router routerE = new Router();
         Router routerF = new Router();
+        this.routerMap.put("RouterA", routerA);
+        this.routerMap.put("RouterB", routerB);
+        this.routerMap.put("RouterC", routerC);
+        this.routerMap.put("RouterD", routerD);
+        this.routerMap.put("RouterE", routerE);
+        this.routerMap.put("RouterF", routerF);
 
         //初始化路由器A
         Map<String, Information> informationTableA = new HashMap<>();
         Map<Router, Integer> adjRouterMissCountA = new HashMap<>();
-        informationTableA.put("Network1", new Information("Network1", 0, "null"));
-        informationTableA.put("Network2", new Information("Network2", 0, "null"));
-        informationTableA.put("Network3", new Information("Network3", 0, "null"));
+        informationTableA.put("Network1", new Information("Network1", 1, "null"));
+        informationTableA.put("Network2", new Information("Network2", 1, "null"));
+        informationTableA.put("Network3", new Information("Network3", 1, "null"));
+        informationTableA.put("Network4", new Information("Network4", 16, "null"));
+        informationTableA.put("Network5", new Information("Network5", 16, "null"));
+        informationTableA.put("Network6", new Information("Network6", 16, "null"));
         adjRouterMissCountA.put(routerB, 0);
         adjRouterMissCountA.put(routerD, 0);
         adjRouterMissCountA.put(routerE, 0);
@@ -43,39 +52,49 @@ public class LAN {
         routerA.setInformationTable(informationTableA);
         routerA.setAdjRouterMissCount(adjRouterMissCountA);
         routerA.setRouterStatus(true);
-        this.routerMap.put("RouterA", routerA);
 
         //初始化路由器B
         Map<String, Information> informationTableB = new HashMap<>();
         Map<Router, Integer> adjRouterMissCountB = new HashMap<>();
-        informationTableB.put("Network3", new Information("Network3", 0, "null"));
-        informationTableB.put("Network4", new Information("Network4", 0, "null"));
+        informationTableB.put("Network1", new Information("Network1", 16, "null"));
+        informationTableB.put("Network2", new Information("Network2", 16, "null"));
+        informationTableB.put("Network3", new Information("Network3", 1, "null"));
+        informationTableB.put("Network4", new Information("Network4", 1, "null"));
+        informationTableB.put("Network5", new Information("Network5", 16, "null"));
+        informationTableB.put("Network6", new Information("Network6", 16, "null"));
+
         adjRouterMissCountB.put(routerA, 0);
         adjRouterMissCountB.put(routerC, 0);
         routerB.setRouterName("RouterB");
         routerB.setInformationTable(informationTableB);
         routerB.setAdjRouterMissCount(adjRouterMissCountB);
         routerB.setRouterStatus(true);
-        this.routerMap.put("RouterB", routerB);
 
         //初始化路由器C
         Map<String, Information> informationTableC = new HashMap<>();
         Map<Router, Integer> adjRouterMissCountC = new HashMap<>();
-        informationTableC.put("Network4", new Information("Network4", 0, "null"));
-        informationTableC.put("Network5", new Information("Network5", 0, "null"));
+        informationTableC.put("Network1", new Information("Network1", 16, "null"));
+        informationTableC.put("Network2", new Information("Network2", 16, "null"));
+        informationTableC.put("Network3", new Information("Network3", 16, "null"));
+        informationTableC.put("Network4", new Information("Network4", 1, "null"));
+        informationTableC.put("Network5", new Information("Network5", 1, "null"));
+        informationTableC.put("Network6", new Information("Network6", 16, "null"));
         adjRouterMissCountC.put(routerB, 0);
         adjRouterMissCountC.put(routerF, 0);
         routerC.setRouterName("RouterC");
         routerC.setInformationTable(informationTableC);
         routerC.setAdjRouterMissCount(adjRouterMissCountC);
         routerC.setRouterStatus(true);
-        this.routerMap.put("RouterC", routerC);
 
         //初始化路由器D
         Map<String, Information> informationTableD = new HashMap<>();
         Map<Router, Integer> adjRouterMissCountD = new HashMap<>();
-        informationTableD.put("Network2", new Information("Network2", 0, "null"));
-        informationTableD.put("Network5", new Information("Network5", 0, "null"));
+        informationTableD.put("Network1", new Information("Network1", 16, "null"));
+        informationTableD.put("Network2", new Information("Network2", 1, "null"));
+        informationTableD.put("Network3", new Information("Network3", 16, "null"));
+        informationTableD.put("Network4", new Information("Network4", 16, "null"));
+        informationTableD.put("Network5", new Information("Network5", 1, "null"));
+        informationTableD.put("Network6", new Information("Network6", 16, "null"));
         adjRouterMissCountD.put(routerA, 0);
         adjRouterMissCountD.put(routerE, 0);
         adjRouterMissCountD.put(routerF, 0);
@@ -83,13 +102,16 @@ public class LAN {
         routerD.setInformationTable(informationTableD);
         routerD.setAdjRouterMissCount(adjRouterMissCountD);
         routerD.setRouterStatus(true);
-        this.routerMap.put("RouterD", routerD);
 
         //初始化路由器E
         Map<String, Information> informationTableE = new HashMap<>();
         Map<Router, Integer> adjRouterMissCountE = new HashMap<>();
-        informationTableE.put("Network1", new Information("Network1", 0, "null"));
-        informationTableE.put("Network6", new Information("Network6", 0, "null"));
+        informationTableE.put("Network1", new Information("Network1", 1, "null"));
+        informationTableE.put("Network2", new Information("Network2", 16, "null"));
+        informationTableE.put("Network3", new Information("Network3", 16, "null"));
+        informationTableE.put("Network4", new Information("Network4", 16, "null"));
+        informationTableE.put("Network5", new Information("Network5", 16, "null"));
+        informationTableE.put("Network6", new Information("Network6", 1, "null"));
         adjRouterMissCountE.put(routerA, 0);
         adjRouterMissCountE.put(routerD, 0);
         adjRouterMissCountE.put(routerF, 0);
@@ -97,13 +119,16 @@ public class LAN {
         routerE.setInformationTable(informationTableE);
         routerE.setAdjRouterMissCount(adjRouterMissCountE);
         routerE.setRouterStatus(true);
-        this.routerMap.put("RouterE", routerE);
 
         //初始化路由器F
         Map<String, Information> informationTableF = new HashMap<>();
         Map<Router, Integer> adjRouterMissCountF = new HashMap<>();
-        informationTableF.put("Network5", new Information("Network5", 0, "null"));
-        informationTableF.put("Network6", new Information("Network6", 0, "null"));
+        informationTableF.put("Network1", new Information("Network1", 16, "null"));
+        informationTableF.put("Network2", new Information("Network2", 16, "null"));
+        informationTableF.put("Network3", new Information("Network3", 16, "null"));
+        informationTableF.put("Network4", new Information("Network4", 16, "null"));
+        informationTableF.put("Network5", new Information("Network5", 1, "null"));
+        informationTableF.put("Network6", new Information("Network6", 1, "null"));
         adjRouterMissCountF.put(routerC, 0);
         adjRouterMissCountF.put(routerD, 0);
         adjRouterMissCountF.put(routerE, 0);
@@ -111,7 +136,6 @@ public class LAN {
         routerF.setInformationTable(informationTableF);
         routerF.setAdjRouterMissCount(adjRouterMissCountF);
         routerF.setRouterStatus(true);
-        this.routerMap.put("RouterF", routerF);
     }
 
     //初始化网络及邻接路由器关系
@@ -188,7 +212,7 @@ public class LAN {
 
     public void setRouterUpdateTime(int t) {
         for(String routerName : routerMap.keySet()) {
-            routerMap.get(routerName).setUpdateTime(t);
+            routerMap.get(routerName).setUpdateTime(t * 10);
         }
     }
 }
