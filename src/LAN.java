@@ -181,8 +181,8 @@ public class LAN {
     }
 
     //网络加入
-    public void addNetwork(Network network, List<Router> adjRouterList) {
-        networkMap.put(network.getNetworkName(), new Network(network.getNetworkName(), adjRouterList));
+    public void addNetwork(String networkName, List<Router> adjRouterList) {
+        networkMap.put(networkName, new Network(networkName, adjRouterList));
     }
     
     //网络删除
