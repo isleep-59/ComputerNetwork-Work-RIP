@@ -76,7 +76,7 @@ public class Router extends Thread implements Serializable {
         Map<String, Information> comeInformationTable = new HashMap<>();
         for (String networkName : router.getInformationTable().keySet()) {
             int distance = router.getInformationTable().get(networkName).getDistance();
-            if(distance != 16) {
+            if(distance < 16) {
                 distance += 1;
             }
             comeInformationTable.put(networkName, new Information(networkName, distance, router.routerName));

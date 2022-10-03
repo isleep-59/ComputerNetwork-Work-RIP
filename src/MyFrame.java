@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -186,7 +185,7 @@ class P2 extends JPanel {
 
 //网络加入
 class P3 extends JPanel {
-    public P3(LAN lan, CardLayout cardLayout, JPanel panel) {
+    public P3(LAN lan, CardLayout cardLayout, JPanel panel, JComboBox<String> jc_network) {
         setLayout(null);
 
         JLabel jl_inputNetworkName = new JLabel("请输入要加入的网络名称：");
@@ -240,15 +239,15 @@ class P3 extends JPanel {
                     adjRouterList.add(routerMap.get("RouterF"));
                 }
 
-                if(adjRouterList.isEmpty()) {
+                while(adjRouterList.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "请选择相邻路由器！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }
-                else {
-                    for(String routerName : routerMap.keySet()) {
-                        routerMap.get(routerName).getInformationTable().put(networkName, new Information(networkName, 16, null));
-                    }
-                    lan.addNetwork(networkName, adjRouterList);
+
+                for(String routerName : routerMap.keySet()) {
+                    routerMap.get(routerName).getInformationTable().put(networkName, new Information(networkName, 16, null));
                 }
+                lan.addNetwork(networkName, adjRouterList);
+                jc_network.addItem(networkName);
 
                 JOptionPane.showMessageDialog(null, "成功添加网络！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 cardLayout.show(panel, "p2");
@@ -270,27 +269,20 @@ class P3 extends JPanel {
 
 //网络退出
 class P4 extends JPanel {
-    public P4(LAN lan, CardLayout cardLayout, JPanel panel) {
+    public P4(LAN lan, CardLayout cardLayout, JPanel panel, JComboBox<String> jc_network) {
         setLayout(null);
 
         JLabel jl = new JLabel("请选择下列要退出的网络：");
         jl.setBounds(80, 60, 140, 20);
-
-        JComboBox<String> jc = new JComboBox<>();
-        jc.setBounds(80, 90, 100, 20);
-        jc.addItem("请选择");
-        for(String networkName : lan.getNetworkMap().keySet()) {
-            jc.addItem(networkName);
-        }
 
         JButton jb_select = new JButton("选择");
         jb_select.setBounds(240, 90, 80, 20);
         jb_select.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String networkName = (String)jc.getSelectedItem();
+                String networkName = (String)jc_network.getSelectedItem();
                 lan.deleteNetwork(networkName);
-                jc.removeItem(networkName);
+                jc_network.removeItem(networkName);
 
                 JOptionPane.showMessageDialog(null, "成功退出网络！", "提示", JOptionPane.INFORMATION_MESSAGE);
                 cardLayout.show(panel, "p2");
@@ -298,36 +290,28 @@ class P4 extends JPanel {
         });
 
         this.add(jl);
-        this.add(jc);
+        this.add(jc_network);
         this.add(jb_select);
     }
 }
 
 //路由器故障
 class P5 extends JPanel {
-    public P5(LAN lan, CardLayout cardLayout, JPanel panel) {
+    public P5(LAN lan, CardLayout cardLayout, JPanel panel, JComboBox<String> jc_routerTrue, JComboBox<String> jc_routerFalse) {
         setLayout(null);
 
         JLabel jl = new JLabel("请选择下列出现故障的路由器：");
         jl.setBounds(80, 60, 140, 20);
-
-        JComboBox<String> jc = new JComboBox<>();
-        jc.setBounds(80, 90, 100, 20);
-        jc.addItem("请选择");
-        for(String routerName : lan.getRouterMap().keySet()) {
-            if(lan.getRouterMap().get(routerName).getRouterStatus() == true) {
-                jc.addItem(routerName);
-            }
-        }
 
         JButton jb_select = new JButton("选择");
         jb_select.setBounds(240, 90, 80, 20);
         jb_select.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String routerName = (String)jc.getSelectedItem();
+                String routerName = (String)jc_routerTrue.getSelectedItem();
                 lan.routerFault(routerName);
-                jc.removeItem(routerName);
+                jc_routerTrue.removeItem(routerName);
+                jc_routerFalse.addItem(routerName);
 
                 String out = routerName + "发生故障！";
                 JOptionPane.showMessageDialog(null, out, "提示", JOptionPane.INFORMATION_MESSAGE);
@@ -336,44 +320,37 @@ class P5 extends JPanel {
         });
 
         this.add(jl);
-        this.add(jc);
+        this.add(jc_routerTrue);
         this.add(jb_select);
     }
 }
 
 //路由器恢复
 class P6 extends JPanel {
-    public P6(LAN lan, CardLayout cardLayout, JPanel panel) {
+    public P6(LAN lan, CardLayout cardLayout, JPanel panel, JComboBox<String> jc_routerTrue, JComboBox<String> jc_routerFalse) {
         setLayout(null);
 
         JLabel jl = new JLabel("请选择下列要恢复的路由器：");
         jl.setBounds(80, 60, 140, 20);
-
-        JComboBox<String> jc = new JComboBox<>();
-        jc.setBounds(80, 90, 100, 20);
-        jc.addItem("请选择");
-        for(String routerName : lan.getRouterMap().keySet()) {
-            if(lan.getRouterMap().get(routerName).getRouterStatus() == false) {
-                jc.addItem(routerName);
-            }
-        }
 
         JButton jb_select = new JButton("选择");
         jb_select.setBounds(240, 90, 80, 20);
         jb_select.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String routerName = (String)jc.getSelectedItem();
+                String routerName = (String)jc_routerFalse.getSelectedItem();
                 lan.routerRecover(routerName);
-                jc.removeItem(routerName);
+                jc_routerFalse.removeItem(routerName);
+                jc_routerTrue.addItem(routerName);
 
-                JOptionPane.showMessageDialog(null, "成功退出网络！", "提示", JOptionPane.INFORMATION_MESSAGE);
+                String out = routerName + "修复成功！";
+                JOptionPane.showMessageDialog(null, out, "提示", JOptionPane.INFORMATION_MESSAGE);
                 cardLayout.show(panel, "p2");
             }
         });
 
         this.add(jl);
-        this.add(jc);
+        this.add(jc_routerFalse);
         this.add(jb_select);
     }
 }
@@ -393,17 +370,42 @@ public class MyFrame extends JFrame {
         panel.setBounds(0, 0, 400, 300);
         setContentPane(panel);
 
+        JComboBox<String> jc_network = new JComboBox<>();
+        jc_network.setBounds(80, 90, 100, 20);
+        jc_network.addItem("请选择");
+        for(String networkName : lan.getNetworkMap().keySet()) {
+            jc_network.addItem(networkName);
+        }
+
+        JComboBox<String> jc_routerFalse = new JComboBox<>();
+        jc_routerFalse.setBounds(80, 90, 100, 20);
+        jc_routerFalse.addItem("请选择");
+        for(String routerName : lan.getRouterMap().keySet()) {
+            if(lan.getRouterMap().get(routerName).getRouterStatus() == false) {
+                jc_routerFalse.addItem(routerName);
+            }
+        }
+
+        JComboBox<String> jc_routerTrue = new JComboBox<>();
+        jc_routerTrue.setBounds(80, 90, 100, 20);
+        jc_routerTrue.addItem("请选择");
+        for(String routerName : lan.getRouterMap().keySet()) {
+            if(lan.getRouterMap().get(routerName).getRouterStatus() == true) {
+                jc_routerTrue.addItem(routerName);
+            }
+        }
+
         P1 p1 = new P1(lan, cardLayout, panel);
         panel.add(p1, "p1");
         P2 p2 = new P2(lan, cardLayout, panel);
         panel.add(p2, "p2");
-        P3 p3 = new P3(lan, cardLayout, panel);
+        P3 p3 = new P3(lan, cardLayout, panel, jc_network);
         panel.add(p3, "p3");
-        P4 p4 = new P4(lan, cardLayout, panel);
+        P4 p4 = new P4(lan, cardLayout, panel, jc_network);
         panel.add(p4, "p4");
-        P5 p5 = new P5(lan, cardLayout, panel);
+        P5 p5 = new P5(lan, cardLayout, panel, jc_routerTrue, jc_routerFalse);
         panel.add(p5, "p5");
-        P6 p6 = new P6(lan, cardLayout, panel);
+        P6 p6 = new P6(lan, cardLayout, panel, jc_routerTrue, jc_routerFalse);
         panel.add(p6, "p6");
     }
 }
