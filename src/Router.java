@@ -117,10 +117,10 @@ public class Router extends Thread implements Serializable {
         }
 
         for (Router adjRouter : adjRouterMissCount.keySet()) {
-            if(adjRouterMissCount.get(adjRouter) == 6) {
+            if(adjRouterMissCount.get(adjRouter) >= 6) {
                 for(String networkName : informationTable.keySet()) {
                     Information information = informationTable.get(networkName);
-                    if(information.getNextRouterName() == adjRouter.routerName) {
+                    if(information.getNextRouterName().equals(adjRouter.routerName)) {
                         information.setDistance(16);
                         break;
                     }
