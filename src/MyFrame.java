@@ -129,10 +129,10 @@ class P2 extends JPanel {
         jb_check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String out = "TargetNetwork   Distance   NextRouter\n";
+                String out = "目的网络           距离            下一跳\n";
                 String routerName = (String)jc_router.getSelectedItem();
                 for(Information information : lan.getRouterMap().get(routerName).getInformationTable().values()) {
-                    out += "     " + information.getTargetNetwork() + "              " + information.getDistance() + "              " + information.getNextRouterName() + "\n";
+                    out += information.getTargetNetwork() + "           " + information.getDistance() + "                 " + information.getNextRouterName() + "\n";
                 }
                 JOptionPane.showMessageDialog(null, out, routerName + "的路由表", JOptionPane.INFORMATION_MESSAGE);
             }
